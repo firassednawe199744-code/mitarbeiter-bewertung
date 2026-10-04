@@ -183,7 +183,21 @@ Bewertung absenden
 </div>
 </main>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
+
+const SUPABASE_URL =
+  "https://npabtjssyjmngzqxkmw.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_4zqNs0F423SjEudPEeRdew_9VEtVly7";
+
+const supabaseClient =
+  supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
 let score={p:0,s:0,f:0};
 
@@ -193,6 +207,7 @@ document.querySelectorAll(".buttons").forEach(box=>{
 
     let b=document.createElement("button");
 
+    b.type="button";
     b.className="point";
     b.textContent=i;
 
@@ -210,14 +225,7 @@ document.querySelectorAll(".buttons").forEach(box=>{
         x.classList.toggle("active",n===i);
       });
 
-      let total=score.p+score.s+score.f;
-
-      document.getElementById("total").textContent=total;
-
-      document.getElementById("send").disabled=
-        total!==3 ||
-        document.getElementById("customerName").value.trim()==="" ||
-        document.getElementById("customerAddress").value.trim()==="";
+      checkForm();
     };
 
     box.appendChild(b);
@@ -229,6 +237,8 @@ function checkForm(){
 
   let total=score.p+score.s+score.f;
 
+  document.getElementById("total").textContent=total;
+
   document.getElementById("send").disabled=
     total!==3 ||
     document.getElementById("customerName").value.trim()==="" ||
@@ -236,45 +246,54 @@ function checkForm(){
 }
 
 document.getElementById("customerName")
-  .addEventListener("input",checkForm);
+.addEventListener("input",checkForm);
 
 document.getElementById("customerAddress")
-  .addEventListener("input",checkForm);
+.addEventListener("input",checkForm);
 
 
-document.getElementById("send").onclick=()=>{
+document.getElementById("send").onclick=async()=>{
 
-  let bewertungen=JSON.parse(
-    localStorage.getItem("bewertungen")||"[]"
-  );
+  const button=document.getElementById("send");
+  const msg=document.getElementById("msg");
 
-  bewertungen.push({
+  button.disabled=true;
+  msg.textContent="Bewertung wird gesendet...";
 
-    kundenname:
-      document.getElementById("customerName").value.trim(),
+  const {error}=await supabaseClient
+    .from("Mitarbeiter-Bewertung")
+    .insert({
 
-    kundenadresse:
-      document.getElementById("customerAddress").value.trim(),
+      kundenname:
+        document.getElementById("customerName").value.trim(),
 
-    mitarbeiter:
-      document.getElementById("employee").value,
+      kundenadresse:
+        document.getElementById("customerAddress").value.trim(),
 
-    puenktlichkeit:score.p,
+      mitarbeiter:
+        document.getElementById("employee").value,
 
-    sauberkeit:score.s,
+      puenktlichkeit:score.p,
 
-    freundlichkeit:score.f,
+      sauberkeit:score.s,
 
-    datum:new Date().toISOString()
+      freundlichkeit:score.f
 
-  });
+    });
 
-  localStorage.setItem(
-    "bewertungen",
-    JSON.stringify(bewertungen)
-  );
+  if(error){
 
-  document.getElementById("msg").textContent=
+    console.error(error);
+
+    msg.textContent=
+      "Fehler beim Senden. Bitte versuchen Sie es erneut.";
+
+    button.disabled=false;
+
+    return;
+  }
+
+  msg.textContent=
     "Vielen Dank für Ihre Bewertung!";
 
   document.getElementById("customerName").value="";
@@ -284,12 +303,11 @@ document.getElementById("send").onclick=()=>{
 
   document.getElementById("total").textContent="0";
 
-  document.getElementById("send").disabled=true;
-
   document.querySelectorAll(".point").forEach(b=>
     b.classList.remove("active")
   );
 
+  button.disabled=true;
 };
 
 </script>
