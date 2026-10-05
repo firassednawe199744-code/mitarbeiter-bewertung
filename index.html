@@ -283,14 +283,16 @@ document.getElementById("send").onclick=async()=>{
 
   if(error){
 
-    console.error(error);
+  console.error(error);
 
-    msg.textContent=
-      "Fehler beim Senden. Bitte versuchen Sie es erneut.";
+  msg.textContent =
+    "Fehler: " + (error.message || "Unbekannter Fehler") +
+    " | Code: " + (error.code || "");
 
-    button.disabled=false;
+  button.disabled=false;
 
-    return;
+  return;
+  
   }
 
   msg.textContent=
