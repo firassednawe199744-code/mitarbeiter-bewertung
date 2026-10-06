@@ -2,120 +2,232 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Mitarbeiterbewertung</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SHK Fahrzeugverwaltung V1</title>
 
 <style>
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f2f4f7;
-  color:#17202a
+* {
+    box-sizing: border-box;
 }
 
-header{
-  background:#17202a;
-  color:white;
-  text-align:center;
-  padding:28px 15px
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f3f4f6;
+    color: #111827;
 }
 
-h1{margin:0 0 8px}
-.sub{margin:0;color:#d9dee3}
-
-main{
-  max-width:650px;
-  margin:25px auto;
-  padding:0 15px
+header {
+    background: #111827;
+    color: white;
+    padding: 18px;
 }
 
-.card{
-  background:white;
-  border-radius:18px;
-  padding:22px;
-  box-shadow:0 4px 18px #0001
+header h1 {
+    margin: 0;
+    font-size: 22px;
 }
 
-label{
-  font-weight:bold;
-  display:block;
-  margin:15px 0 7px
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
 }
 
-input,select{
-  width:100%;
-  padding:13px;
-  border:1px solid #ccc;
-  border-radius:10px;
-  font-size:16px
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
 }
 
-.criteria{
-  display:grid;
-  gap:14px;
-  margin-top:20px
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px #0001;
 }
 
-.item{
-  border:1px solid #ddd;
-  border-radius:14px;
-  padding:16px;
-  text-align:center
+.card h3 {
+    margin-top: 0;
 }
 
-.item b{
-  display:block;
-  margin-bottom:12px
+.number {
+    font-size: 30px;
+    font-weight: bold;
 }
 
-.buttons{
-  display:flex;
-  justify-content:center;
-  gap:8px
+button {
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-weight: bold;
 }
 
-button.point{
-  width:45px;
-  height:45px;
-  border:1px solid #bbb;
-  background:white;
-  border-radius:9px;
-  font-size:16px
+.primary {
+    background: #2563eb;
+    color: white;
 }
 
-button.point.active{
-  background:#17202a;
-  color:white
+.danger {
+    background: #dc2626;
+    color: white;
 }
 
-.total{
-  text-align:center;
-  font-size:19px;
-  font-weight:bold;
-  margin:22px 0
+.secondary {
+    background: #e5e7eb;
 }
 
-#send{
-  width:100%;
-  padding:15px;
-  border:0;
-  border-radius:10px;
-  background:#1670b8;
-  color:white;
-  font-size:17px;
-  font-weight:bold
+.toolbar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
 }
 
-#send:disabled{
-  background:#aaa
+.toolbar input {
+    flex: 1;
 }
 
-#msg{
-  text-align:center;
-  font-weight:bold;
-  margin-top:15px
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+}
+
+.vehicle {
+    background: white;
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px #0001;
+}
+
+.vehicle-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.vehicle-header h3 {
+    margin: 0;
+}
+
+.badge {
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.ok {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.warning {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.overdue {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #0008;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    width: 100%;
+    max-width: 750px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 15px;
+    padding: 25px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.full {
+    grid-column: 1 / -1;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+label {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+@media(max-width: 800px) {
+    .dashboard {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full {
+        grid-column: auto;
+    }
+}
+
+@media(max-width: 500px) {
+    .dashboard {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .toolbar {
+        flex-direction: column;
+    }
+
+    .vehicle-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
 }
 </style>
 </head>
@@ -123,194 +235,667 @@ button.point.active{
 <body>
 
 <header>
-<h1>Mitarbeiterbewertung</h1>
-<p class="sub">Ihre Meinung ist uns wichtig</p>
+    <h1>🚐 SHK Fahrzeugverwaltung V1</h1>
 </header>
 
-<main>
-<div class="card">
+<div class="container">
 
-<label>Name des Kunden</label>
-<input
-  type="text"
-  id="customerName"
-  placeholder="Vor- und Nachname"
->
+    <div class="dashboard">
 
-<label>Adresse des Kunden</label>
-<input
-  type="text"
-  id="customerAddress"
-  placeholder="Straße, Hausnummer, PLZ, Ort"
->
+        <div class="card">
+            <div>Fahrzeuge</div>
+            <div class="number" id="total">0</div>
+        </div>
 
-<label>Mitarbeiter</label>
-<select id="employee">
-<option>Firas Sednawe</option>
-<option>Camih Mire</option>
-<option>Anis Flifl</option>
+        <div class="card">
+            <div>🟢 Alles OK</div>
+            <div class="number" id="ok">0</div>
+        </div>
+
+        <div class="card">
+            <div>🟠 Bald fällig</div>
+            <div class="number" id="warning">0</div>
+        </div>
+
+        <div class="card">
+            <div>🔴 Überfällig</div>
+            <div class="number" id="overdue">0</div>
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <div class="toolbar">
+
+            <input
+                type="text"
+                id="search"
+                placeholder="Kennzeichen, Fahrzeug oder Fahrer suchen..."
+                oninput="renderVehicles()"
+            >
+
+            <button class="primary" onclick="openModal()">
+                + Fahrzeug hinzufügen
+            </button>
+
+        </div>
+
+        <div id="vehicles"></div>
+
+    </div>
+
+</div>
+
+
+<!-- MODAL -->
+
+<div class="modal" id="modal">
+
+<div class="modal-content">
+
+<h2 id="modalTitle">Fahrzeug hinzufügen</h2>
+
+<form id="vehicleForm">
+
+<div class="form-grid">
+
+<div class="field">
+<label>Kennzeichen *</label>
+<input id="plate" required>
+</div>
+
+<div class="field">
+<label>Hersteller</label>
+<input id="brand">
+</div>
+
+<div class="field">
+<label>Modell</label>
+<input id="model">
+</div>
+
+<div class="field">
+<label>Baujahr</label>
+<input id="year" type="number">
+</div>
+
+<div class="field">
+<label>FIN</label>
+<input id="vin">
+</div>
+
+<div class="field">
+<label>Kilometerstand</label>
+<input id="mileage" type="number">
+</div>
+
+<div class="field">
+<label>Motor</label>
+<input id="engine">
+</div>
+
+<div class="field">
+<label>Kraftstoff</label>
+
+<select id="fuel">
+<option>Diesel</option>
+<option>Benzin</option>
+<option>Elektro</option>
+<option>Hybrid</option>
+<option>Sonstige</option>
 </select>
 
-<div class="criteria">
-
-<div class="item">
-<b>⏰ Pünktlichkeit</b>
-<div class="buttons" data-name="p"></div>
 </div>
 
-<div class="item">
-<b>🧹 Sauberkeit</b>
-<div class="buttons" data-name="s"></div>
+<div class="field">
+<label>Öl</label>
+<input id="oil" placeholder="z.B. 5W-30">
 </div>
 
-<div class="item">
-<b>🙂 Freundlichkeit</b>
-<div class="buttons" data-name="f"></div>
+<div class="field">
+<label>Ölmenge (Liter)</label>
+<input id="oilAmount" type="number" step="0.1">
+</div>
+
+<div class="field">
+<label>Reifen</label>
+<input id="tires">
+</div>
+
+<div class="field">
+<label>Fahrer</label>
+<input id="driver">
+</div>
+
+<div class="field">
+<label>TÜV</label>
+<input id="tuv" type="date">
+</div>
+
+<div class="field">
+<label>UVV</label>
+<input id="uvv" type="date">
+</div>
+
+<div class="field">
+<label>Service</label>
+<input id="service" type="date">
+</div>
+
+<div class="field">
+<label>Ölwechsel</label>
+<input id="oilChange" type="date">
+</div>
+
+<div class="field full">
+<label>Notizen</label>
+<textarea id="notes" rows="4"></textarea>
 </div>
 
 </div>
 
-<div class="total">
-Punkte: <span id="total">0</span> / 3
-</div>
+<div class="form-buttons">
 
-<button id="send" disabled>
-Bewertung absenden
+<button
+type="button"
+class="secondary"
+onclick="closeModal()">
+Abbrechen
 </button>
 
-<div id="msg"></div>
+<button
+type="submit"
+class="primary">
+Speichern
+</button>
 
 </div>
-</main>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</form>
+
+</div>
+
+</div>
+
 
 <script>
 
-const SUPABASE_URL =
-  "https://npabtjssyjmngzqxkmw.supabase.co";
+let vehicles =
+JSON.parse(localStorage.getItem("shkVehicles")) || [];
 
-const SUPABASE_KEY =
-  "sb_publishable_4zqNs0F423SjEudPEeRdew_9VEtVly7";
+let editId = null;
 
-const supabaseClient =
-  supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
 
-let score={p:0,s:0,f:0};
+const fields = [
+"plate",
+"brand",
+"model",
+"year",
+"vin",
+"mileage",
+"engine",
+"fuel",
+"oil",
+"oilAmount",
+"tires",
+"driver",
+"tuv",
+"uvv",
+"service",
+"oilChange",
+"notes"
+];
 
-document.querySelectorAll(".buttons").forEach(box=>{
 
-  for(let i=0;i<=3;i++){
+function saveData() {
 
-    let b=document.createElement("button");
+    localStorage.setItem(
+        "shkVehicles",
+        JSON.stringify(vehicles)
+    );
 
-    b.type="button";
-    b.className="point";
-    b.textContent=i;
-
-    b.onclick=()=>{
-
-      let other=Object.keys(score)
-        .filter(k=>k!==box.dataset.name)
-        .reduce((a,k)=>a+score[k],0);
-
-      if(other+i>3)return;
-
-      score[box.dataset.name]=i;
-
-      box.querySelectorAll("button").forEach((x,n)=>{
-        x.classList.toggle("active",n===i);
-      });
-
-      checkForm();
-    };
-
-    box.appendChild(b);
-  }
-
-});
-
-function checkForm(){
-
-  let total=score.p+score.s+score.f;
-
-  document.getElementById("total").textContent=total;
-
-  document.getElementById("send").disabled=
-    total!==3 ||
-    document.getElementById("customerName").value.trim()==="" ||
-    document.getElementById("customerAddress").value.trim()==="";
 }
 
-document.getElementById("customerName")
-.addEventListener("input",checkForm);
 
-document.getElementById("customerAddress")
-.addEventListener("input",checkForm);
+function openModal(id = null) {
+
+    editId = id;
+
+    document
+        .getElementById("modal")
+        .classList
+        .add("active");
+
+    if (id) {
+
+        const vehicle =
+            vehicles.find(v => v.id === id);
+
+        document.getElementById("modalTitle")
+            .innerText =
+            "Fahrzeug bearbeiten";
+
+        fields.forEach(field => {
+
+            document.getElementById(field).value =
+                vehicle[field] || "";
+
+        });
+
+    } else {
+
+        document.getElementById("modalTitle")
+            .innerText =
+            "Fahrzeug hinzufügen";
+
+        document
+            .getElementById("vehicleForm")
+            .reset();
+
+    }
+
+}
 
 
-document.getElementById("send").onclick=async()=>{
+function closeModal() {
 
-  const button=document.getElementById("send");
-  const msg=document.getElementById("msg");
+    document
+        .getElementById("modal")
+        .classList
+        .remove("active");
 
-  button.disabled=true;
-  msg.textContent="Bewertung wird gesendet...";
+    editId = null;
 
-  const {error}=await supabaseClient
-    .from("Mitarbeiter-Bewertung")
-    .insert({
+}
 
-      kundenname:
-        document.getElementById("customerName").value.trim(),
 
-      kundenadresse:
-        document.getElementById("customerAddress").value.trim(),
+document
+.getElementById("vehicleForm")
+.addEventListener("submit", function(e) {
 
-      mitarbeiter:
-        document.getElementById("employee").value,
+    e.preventDefault();
 
-      puenktlichkeit:score.p,
+    const vehicle = {
+        id: editId || Date.now()
+    };
 
-      sauberkeit:score.s,
+    fields.forEach(field => {
 
-      freundlichkeit:score.f
+        vehicle[field] =
+            document.getElementById(field).value;
 
     });
 
-  if(error){
 
-  console.error(error);
+    if (editId) {
 
-  msg.textContent =
-    "Fehler: " + (error.message || "Unbekannter Fehler") +
-    " | Code: " + (error.code || "");
+        const index =
+            vehicles.findIndex(v => v.id === editId);
 
-  button.disabled=false;
+        vehicles[index] = vehicle;
 
-  return;
-  
-  }
+    } else {
 
-  msg.textContent=
-    "Vielen Dank für Ihre Bewertung!";
+        vehicles.push(vehicle);
 
-  document.getElementById("customerName").value="";
-  document.getElementById("customerAddress").value="";
+    }
 
-  score={p:0,s:0,f:0};
 
-  document.getElementById("total").textContent="0";
+    saveData();
 
-  document.querySelectorAll(".point").forEach(b=>
-    b.classList.remove("active")
-  );
+    closeModal();
 
-  button.disabled=true;
-};
+    renderVehicles();
+
+});
+
+
+function deleteVehicle(id) {
+
+    if (!confirm(
+        "Dieses Fahrzeug wirklich löschen?"
+    )) return;
+
+    vehicles =
+        vehicles.filter(v => v.id !== id);
+
+    saveData();
+
+    renderVehicles();
+
+}
+
+
+function daysUntil(date) {
+
+    if (!date) return null;
+
+    const today =
+        new Date();
+
+    const target =
+        new Date(date);
+
+    today.setHours(0,0,0,0);
+    target.setHours(0,0,0,0);
+
+    return Math.ceil(
+        (target - today) /
+        (1000 * 60 * 60 * 24)
+    );
+
+}
+
+
+function status(date) {
+
+    if (!date)
+        return {
+            className: "warning",
+            text: "Kein Datum"
+        };
+
+    const days =
+        daysUntil(date);
+
+    if (days < 0) {
+
+        return {
+            className: "overdue",
+            text: "Überfällig"
+        };
+
+    }
+
+    if (days <= 30) {
+
+        return {
+            className: "warning",
+            text: "Bald fällig"
+        };
+
+    }
+
+    return {
+        className: "ok",
+        text: "OK"
+    };
+
+}
+
+
+function vehicleStatus(vehicle) {
+
+    const dates = [
+        vehicle.tuv,
+        vehicle.uvv,
+        vehicle.service,
+        vehicle.oilChange
+    ].filter(Boolean);
+
+    if (!dates.length)
+        return "warning";
+
+    const statuses =
+        dates.map(date => status(date));
+
+    if (statuses.some(s =>
+        s.className === "overdue"
+    ))
+        return "overdue";
+
+    if (statuses.some(s =>
+        s.className === "warning"
+    ))
+        return "warning";
+
+    return "ok";
+
+}
+
+
+function renderVehicles() {
+
+    const search =
+        document
+        .getElementById("search")
+        .value
+        .toLowerCase();
+
+
+    const filtered =
+        vehicles.filter(vehicle => {
+
+            return JSON.stringify(vehicle)
+                .toLowerCase()
+                .includes(search);
+
+        });
+
+
+    const container =
+        document.getElementById("vehicles");
+
+
+    if (!filtered.length) {
+
+        container.innerHTML = `
+            <p style="text-align:center;color:#6b7280">
+                Keine Fahrzeuge gefunden.
+            </p>
+        `;
+
+    } else {
+
+        container.innerHTML =
+        filtered.map(vehicle => {
+
+            const overall =
+                vehicleStatus(vehicle);
+
+            let overallText =
+                overall === "ok"
+                ? "Alles OK"
+                : overall === "warning"
+                ? "Bald fällig"
+                : "Überfällig";
+
+
+            return `
+
+            <div class="vehicle">
+
+                <div class="vehicle-header">
+
+                    <div>
+
+                        <h3>
+                            ${vehicle.plate || ""}
+                        </h3>
+
+                        <div>
+                            ${vehicle.brand || ""}
+                            ${vehicle.model || ""}
+                            ${vehicle.year || ""}
+                        </div>
+
+                    </div>
+
+                    <span class="badge ${overall}">
+                        ${overallText}
+                    </span>
+
+                </div>
+
+
+                <hr>
+
+
+                <p>
+                    <b>Fahrer:</b>
+                    ${vehicle.driver || "-"}
+                </p>
+
+                <p>
+                    <b>Kilometer:</b>
+                    ${vehicle.mileage || "-"}
+                    km
+                </p>
+
+                <p>
+                    <b>FIN:</b>
+                    ${vehicle.vin || "-"}
+                </p>
+
+                <p>
+                    <b>Motor:</b>
+                    ${vehicle.engine || "-"}
+                </p>
+
+                <p>
+                    <b>Kraftstoff:</b>
+                    ${vehicle.fuel || "-"}
+                </p>
+
+                <p>
+                    <b>Öl:</b>
+                    ${vehicle.oil || "-"}
+                    ${vehicle.oilAmount
+                    ? " / " + vehicle.oilAmount + " l"
+                    : ""}
+                </p>
+
+                <p>
+                    <b>Reifen:</b>
+                    ${vehicle.tires || "-"}
+                </p>
+
+
+                <hr>
+
+
+                <p>
+                    <b>TÜV:</b>
+                    ${vehicle.tuv || "-"}
+                    ${vehicle.tuv
+                    ? statusBadge(vehicle.tuv)
+                    : ""}
+                </p>
+
+                <p>
+                    <b>UVV:</b>
+                    ${vehicle.uvv || "-"}
+                    ${vehicle.uvv
+                    ? statusBadge(vehicle.uvv)
+                    : ""}
+                </p>
+
+                <p>
+                    <b>Service:</b>
+                    ${vehicle.service || "-"}
+                    ${vehicle.service
+                    ? statusBadge(vehicle.service)
+                    : ""}
+                </p>
+
+                <p>
+                    <b>Ölwechsel:</b>
+                    ${vehicle.oilChange || "-"}
+                    ${vehicle.oilChange
+                    ? statusBadge(vehicle.oilChange)
+                    : ""}
+                </p>
+
+
+                <div class="actions">
+
+                    <button
+                    class="primary"
+                    onclick="openModal(${vehicle.id})">
+                    Bearbeiten
+                    </button>
+
+                    <button
+                    class="danger"
+                    onclick="deleteVehicle(${vehicle.id})">
+                    Löschen
+                    </button>
+
+                </div>
+
+            </div>
+
+            `;
+
+        }).join("");
+
+    }
+
+
+    updateDashboard();
+
+}
+
+
+function statusBadge(date) {
+
+    const s =
+        status(date);
+
+    return `
+        <span class="badge ${s.className}">
+            ${s.text}
+        </span>
+    `;
+
+}
+
+
+function updateDashboard() {
+
+    let ok = 0;
+    let warning = 0;
+    let overdue = 0;
+
+
+    vehicles.forEach(vehicle => {
+
+        const s =
+            vehicleStatus(vehicle);
+
+        if (s === "ok")
+            ok++;
+
+        if (s === "warning")
+            warning++;
+
+        if (s === "overdue")
+            overdue++;
+
+    });
+
+
+    document.getElementById("total")
+        .innerText =
+        vehicles.length;
+
+    document.getElementById("ok")
+        .innerText =
+        ok;
+
+    document.getElementById("warning")
+        .innerText =
+        warning;
+
+    document.getElementById("overdue")
+        .innerText =
+        overdue;
+
+}
+
+
+renderVehicles();
 
 </script>
 
